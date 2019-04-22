@@ -1,0 +1,72 @@
+------------------------------------src------------------------------
+ventana->GUIPrincipal|||||||||||||||||||||||||||||||||||||||||||||||||||
+ventanita->framegeneral|||||||||||||||||||||||||||||||||||||||||||||||||
+------------------------------------Modelo---------------------->Controllers
+colores->notacionAnalisis|||||||||||||||||||||||||||||||||||||||||||||||
+lexclass->analizadorLexico||||||||||||||||||||||||||||||||||||||||||||||
+n_ary_tree->controlAmbientes||||||||||||||||||||||||||||||||||||||||||||
+node->ambiente||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+semantico->analizadorSintacticoSemantico||||||||||||||||||||||||||||||||
+-------------------------------------Vista----------------------->components
+arbol_view->frameArbol||||||||||||||||||||||||||||||||||||||||||||||||||
+editor->panelCodigo|||||||||||||||||||||||||||||||||||||||||||||||||||||
+grafiquita->graficosEjecuciones|||||||||||||||||||||||||||||||||||||||||
+statusbar->lineaActual||||||||||||||||||||||||||||||||||||||||||||||||||
+widget->terminalAPP|||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+
+init del GUI
+self.cargarTeclado()
+
+
+    # Acciones de teclado dentro del aplicativo
+    def cargarTeclado(self):
+        # Archivos
+        self.btnNuevo.setShortcut("Ctrl+N")
+        self.btnAbrir.setShortcut("Ctrl+O")
+        self.btnGuardar.setShortcut("Ctrl+S")
+        # Opciones
+        self.btnContinuar.setShortcut("Ctrl+R")
+        self.btnPausar.setShortcut("Ctrl+L")
+        # self.btnLimpiarVariable.triggered.connect()
+        self.btnIniciar.setShortcut("Ctrl+E")
+        self.btnCancelar.setShortcut("Ctrl-Q")
+
+-|-|-|-|-|-|-|-|-|-|-|-|GUI
+principal->mainGeneral
+editor->panel
+-|-|-|-|-|-|-|-|-|-|-|-|terminalAPP
+terminal->terminal
+estado->estado
+-|-|-|-|-|-|-|-|-|-|-|-|n_ary_tree
+analizar->iniciarAnalisis
+contruirparser->iniciarSemanticoSintactico
+run->algPrincipal 
+organizarCondicion--> estructurarCondiciones YAAAAAAAAAAAAAAAAAA
+crearFunciones--> estructurarFunciones YAAAAAAAAAAAAAAAAA
+organizarvalor---> convertirVarValor YAAAAAAAAAAAAAAAAAa
+
+
+
+
+
+
+
+tiempito
+
+
+
+tabla--->tablaDatos
+variables--->variablesEntorno
+padre-->padreAmbiente
+avanzar--->pasoActual
+varables_actuales--->vActual
+ambientes--->ambientesG
+tipos_Lenguaje--->tdLenguaje
+lineas_marcadas--->lMarcadas
+tiempito--->tiempoE
+procedimientos_reservados--->ppReservadas:):):):):):)
+funciones_reservadas--->pfReservadas
+arbolito--->arbolAmbientes
+funciones--->fUsuario
