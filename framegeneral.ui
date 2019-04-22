@@ -81,7 +81,7 @@ QToolButton:hover{
     <addaction name="btnFijar"/>
     <addaction name="btnLexer"/>
     <addaction name="btnContinuar"/>
-    <addaction name="btnPausar"/>
+    <addaction name="btnAutomatico"/>
     <addaction name="btnLimpiarTerminal"/>
     <addaction name="btnLimpiarVariable"/>
     <addaction name="separator"/>
@@ -188,7 +188,7 @@ QToolButton:hover{
     <string>Continuar</string>
    </property>
   </action>
-  <action name="btnPausar">
+  <action name="btnAutomatico">
    <property name="icon">
     <iconset>
      <normalon>:/Stop/FlagYellow.png</normalon>

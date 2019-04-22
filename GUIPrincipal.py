@@ -69,7 +69,7 @@ class GUIPrincipal(QMainWindow):
         self.btnFijar.setIcon(QIcon('assets/imagenes/Fijar.png'))
         self.btnLexer.setIcon(QIcon('assets/imagenes/Lexer.png'))
         self.btnContinuar.setIcon(QIcon('assets/imagenes/Siguiente.png'))
-        self.btnPausar.setIcon(QIcon('assets/imagenes/Pausar.png'))
+        self.btnAutomatico.setIcon(QIcon('assets/imagenes/Automatico.png'))
         self.btnLimpiarTerminal.setIcon(QIcon('assets/imagenes/Bin.png'))
         self.btnLimpiarVariable.setIcon(QIcon('assets/imagenes/BinVariable.png'))
         self.btnIniciar.setIcon(QIcon('assets/imagenes/BanderaVerde.png'))
@@ -93,7 +93,7 @@ class GUIPrincipal(QMainWindow):
         self.btnFijar.triggered.connect(self.opcionesFijarLinea)
         # self.btnLexer.triggered.connect()
         self.btnContinuar.triggered.connect(self.opcionesContinuar)
-        self.btnPausar.triggered.connect(self.opcionesPausar)
+        self.btnAutomatico.triggered.connect(self.opcionesAutomatico)
         self.btnLimpiarTerminal.triggered.connect(self.opcionesLimpiarTerminal)
         # self.btnLimpiarVariable.triggered.connect()
         self.btnIniciar.triggered.connect(self.opcionesIniciar)
@@ -184,7 +184,7 @@ class GUIPrincipal(QMainWindow):
         return self.mainGeneral.panel.text(linea[0])
 
     # Pausar la ejecucion del programa
-    def opcionesPausar(self):
+    def opcionesAutomatico(self):
         print ("Sin desarrollar")
 
     # Limpiar el canvas del terminal
@@ -256,7 +256,7 @@ class GUIPrincipal(QMainWindow):
         self.Barra.addAction(self.btnFijar)
         self.Barra.addAction(self.btnLexer)
         self.Barra.addAction(self.btnContinuar)
-        self.Barra.addAction(self.btnPausar)
+        self.Barra.addAction(self.btnAutomatico)
         self.Barra.addSeparator()
         self.Barra.addAction(self.btnIniciar)
         self.Barra.addAction(self.btnCancelar)
