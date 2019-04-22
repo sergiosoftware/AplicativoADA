@@ -1,6 +1,6 @@
 '''librerias y archivos importados'''
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox, QAction
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox, QGraphicsTextItem, QAction
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import *
 from PyQt5 import uic
@@ -154,21 +154,30 @@ class GUIPrincipal(QMainWindow):
         se toma el ambiente(nodo) actual y se ubica la raiz del arbol de ejecuciones
         se hace el recorrido desde la raiz hasta el ambiente (nodo) actual'''
     def opcionesContinuar(self):
-        posicion = self.mainGeneral.panel.getPosicion()
+        print('llega a alguna cosa')
+        posicion = self.mainGeneral.panel.getPosicionCursor()
+        print(self.mainGeneral.panel.getPosicionCursor())
         datos = self.posicionCursor(posicion)
         if(self.analizadorSemantico != None):
+            print('alguna cosa')
             if self.analizadorSemantico.vActual != None:
+                print('alguna cosa 2')
                 self.mainGeneral.estado.clear()
-                self.varNActual(self.analizadorSemantico.vActual)
-
+                self.informarValores(self.analizadorSemantico.vActual)
+                print('alguna cosa 3')
             nodoA = self.analizadorSemantico.aActual
             raiz = self.analizadorSemantico.arbolAmbientes.getRaiz()
             encontrarN = self.analizadorSemantico.arbolAmbientes.buscarN(nodoA, raiz)
+            print('alguna cosa 4')
             encontrarN.nActivo = True
+            print('alguna cosa 4.1')
             self.mainGeneral.canvas.arbolEntornos = self.analizadorSemantico.arbolAmbientes
+            print('alguna cosa 4.2')
             self.mainGeneral.canvas.drawA()
+            print('alguna cosa 5')
             encontrarN.nActivo = False
             self.analizadorSemantico.pasoActual = False
+            print('alguna cosa 6')
 
     # Obtener posicion del cursor dada una linea
     def posicionCursor(self,linea):
@@ -188,7 +197,6 @@ class GUIPrincipal(QMainWindow):
             posision = posision = self.mainGeneral.panel.getPosicionCursor()
             linea = str(self.posicionCursor(posision))
             cadena = self.mainGeneral.panel.text()
-            print("Esta es la cadena: \n",cadena)
             self.analizadorLexico.setTerminal(self.mainGeneral.terminal)
             lMarcadas = self.mainGeneral.panel.getLineasMarcadas()
             # Iniciar analisis sintactico cadena a cadena
