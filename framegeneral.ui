@@ -139,7 +139,7 @@ QToolButton:hover{
   </action>
   <action name="btnInformacion">
    <property name="icon">
-    <iconset resource="../../../../interprete-analisis-master/Imagenes/resources.qrc">
+    <iconset>
      <normaloff>:/Info/Info.png</normaloff>:/Info/Info.png</iconset>
    </property>
    <property name="text">
@@ -161,7 +161,7 @@ QToolButton:hover{
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../../../interprete-analisis-master/Imagenes/resources.qrc">
+    <iconset>
      <normaloff>:/Lexer/Lightning.png</normaloff>:/Lexer/Lightning.png</iconset>
    </property>
    <property name="text">
@@ -195,7 +195,7 @@ QToolButton:hover{
     </iconset>
    </property>
    <property name="text">
-    <string>Pausar</string>
+    <string>Automático</string>
    </property>
   </action>
   <action name="actionNew_2">

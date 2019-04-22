@@ -22,28 +22,3 @@ END
 
 
 
-VAR 
-    a : INTEGER;
-    PROCEDURE hola(E INTEGER a)
-    BEGIN
-	WRITELN("El valor de a es " + STR(a));
-    END
-BEGIN
-    WRITELN("hola");
-    CALL PROCEDURE hola(a);
-END
-
-
-
-
-VAR 
-a:INTEGER;
-BEGIN
-WRITELN("hola");
-END
-
-
-
-print("Llamo el run con \n", tabla)
-        print(variables)
-        print(padre)
