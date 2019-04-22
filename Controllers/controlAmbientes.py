@@ -9,8 +9,11 @@ class controlAmbientes():
     # Set y Get para la raiz del arbol
     def setRaiz(self,raiz):
         self.raiz=raiz
+
     def getRaiz(self):
+        print(self.raiz)
         return self.raiz
+
 
     # Agregar hijos en el nivel 0 (raiz) y nivel 1
     def agregarRaiz(self, ambienteN, valor):
