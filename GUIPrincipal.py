@@ -59,6 +59,8 @@ class GUIPrincipal(QMainWindow):
         self.lineaN = []
         # Control de la ejecucion automatic
         self.controlAutomatico = True
+        # Puntaje del jugacdor
+        self.puntajeJugador = 0
 
     # Identifica la linea (numero) y posicion dado un estado
     def ControlLinea(self):
@@ -208,7 +210,7 @@ class GUIPrincipal(QMainWindow):
             if (self.analizadorSemantico != None):
                 if self.analizadorSemantico.vActual != None:
                     self.mainGeneral.estado.clear()
-                    self.informarValores(self.analizadorSemantico.vActual)
+                    self.informarValoresAutomatico(self.analizadorSemantico.vActual)
                 nodoA = self.analizadorSemantico.aActual
                 raiz = self.analizadorSemantico.arbolAmbientes.getRaiz()
                 encontrarN = self.analizadorSemantico.arbolAmbientes.buscarN(nodoA, raiz)
@@ -312,10 +314,8 @@ class GUIPrincipal(QMainWindow):
         # Solicitar al usuario los resultados esperados de la ejecucion
         valorEsperado, ok = QInputDialog.getText(self, "Valor esperado de la ejecucion", "Valor esperado:")
         if ok and valorEsperado != '': print('Esperado: ', valorEsperado)
-        ultimo = 0
-        ultimonuevo = 0
+        ultimonuevo = ""
         for i,j in variables.items():
-            ultimo = ultimo+1
             if type(j[0]) == tuple:
                 self.mainGeneral.estado.append(etiquetaAzulO + "Variable: " + cierreEtiqueta + etiquetaVerde + str(i) + cierreEtiqueta +
                                                etiquetaAzulO + "Almacenados :" + str(j[0][0]) + cierreEtiqueta + " Dimension " + str(j[0][1]))
@@ -328,13 +328,49 @@ class GUIPrincipal(QMainWindow):
                     self.mainGeneral.estado.append(etiquetaAzulO + "Costos " + str(j[1].edges()) + cierreEtiqueta)
                 else:
                     self.mainGeneral.estado.append(etiquetaAzulO + "Informacion "+ str(j[1]) + cierreEtiqueta)
-        for k,l  in variables.items():
-            print("Ultimo, ",ultimo)
-            ultimonuevo = ultimonuevo+1
-            if (ultimonuevo == ultimo):
-                print("Coincidencia",str(l[1]))
-                if (str(l[1]) == valorEsperado):
-                    print("ultimo nuevo,",ultimonuevo)
+                    if ((str(j[1])) != "") and ((str(j[1])) != "0"):
+                        ultimonuevo = str(j[1])
+                        print("Informacion nueva",str(j[1]))
+        if (ultimonuevo == valorEsperado):
+            print("Concidencia")
+            self.puntajeJugador = self.puntajeJugador +5
+            puntajeMostrar = "Puntaje actual",str(self.puntajeJugador)
+            mensaje = QMessageBox()
+            mensaje.setIcon(QMessageBox.Information)
+            mensaje.setText(str(puntajeMostrar))
+            mensaje.exec_()
+        else:
+            print ("No coincide")
+            self.puntajeJugador = self.puntajeJugador-3
+            puntajeMostrar = "Puntaje actual", str(self.puntajeJugador)
+            mensaje = QMessageBox()
+            mensaje.setIcon(QMessageBox.Information)
+            mensaje.setText(str(puntajeMostrar))
+            mensaje.exec_()
+
+
+
+
+    # Informar valores ejecucion automatica
+    def informarValoresAutomatico(self,variables):
+        # informacion sobre las variables de una ejecucion
+        def informarValores(self, variables):
+            for i, j in variables.items():
+                if type(j[0]) == tuple:
+                    self.mainGeneral.estado.append(
+                        etiquetaAzulO + "Variable: " + cierreEtiqueta + etiquetaVerde + str(i) + cierreEtiqueta +
+                        etiquetaAzulO + "Almacenados :" + str(j[0][0]) + cierreEtiqueta + " Dimension " + str(j[0][1]))
+                    self.mainGeneral.estado.append(etiquetaAzulO + "Valores " + str(j[1]) + cierreEtiqueta)
+                else:
+                    self.mainGeneral.estado.append(
+                        etiquetaAzulO + "Variable: " + cierreEtiqueta + etiquetaVerde + str(i) + cierreEtiqueta +
+                        etiquetaAzulO + "Tipo " + str(j[0]) + cierreEtiqueta)
+                    if (j[0] == 'GRAPH'):
+                        self.mainGeneral.estado.append(
+                            etiquetaAzulO + "Ambientes " + str(j[1].nodes()) + cierreEtiqueta)
+                        self.mainGeneral.estado.append(etiquetaAzulO + "Costos " + str(j[1].edges()) + cierreEtiqueta)
+                    else:
+                        self.mainGeneral.estado.append(etiquetaAzulO + "Informacion " + str(j[1]) + cierreEtiqueta)
 
     # Tokens del analisis del codigo
     def tokensCodigo(self, cadena):

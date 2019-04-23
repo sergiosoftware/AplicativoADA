@@ -1851,7 +1851,7 @@ class sintacticoSemantico:
 
                 #print(">>>> " + valor_evaluado)
 
-                self.terminal.append(etiquetaAzulClaro + ">>>>>>   " + cierreEtiqueta + etiquetaVerde + valor_evaluado + cierreEtiqueta)
+                self.terminal.append(etiquetaAzulClaro + "Output" + cierreEtiqueta + etiquetaVerde + valor_evaluado + cierreEtiqueta)
                 # print("Sentencia escribir: " + str(tabla[2]))
                 fint = time.time()
                 self.tiempoE = (fint - iniciot)
