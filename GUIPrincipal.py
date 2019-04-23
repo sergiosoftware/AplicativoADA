@@ -231,6 +231,11 @@ class GUIPrincipal(QMainWindow):
     # Iniciar el proceso de analisis lexico y sintactico
     def opcionesIniciar(self):
         if (not self.hiloControl.isAlive()):
+            mensajeInicial = QMessageBox()
+            mensajeInicial.setWindowTitle("Puntajes")
+            mensajeInicial.setIcon(QMessageBox.Information)
+            mensajeInicial.setText("El acierto del usuario en el resultado de la ejecucion de la linea \n significa la suma de 5 puntos. El error del usuario en el resultado \n de la ejecucion de la linea significa la resta de 3 puntos")
+            mensajeInicial.exec_()
             posision = posision = self.mainGeneral.panel.getPosicionCursor()
             linea = str(self.posicionCursor(posision))
             cadena = self.mainGeneral.panel.text()
@@ -334,23 +339,19 @@ class GUIPrincipal(QMainWindow):
         if (ultimonuevo == valorEsperado):
             print("Concidencia")
             self.puntajeJugador = self.puntajeJugador +5
-            puntajeMostrar = "Puntaje actual",str(self.puntajeJugador)
             mensaje = QMessageBox()
-            mensaje.setIcon(QMessageBox.Information)
-            mensaje.setText(str(puntajeMostrar))
+            mensaje.setWindowTitle("ACIERTO, Puntaje Actual:")
+            mensaje.setIcon(QMessageBox.Warning)
+            mensaje.setText(str(self.puntajeJugador))
             mensaje.exec_()
         else:
             print ("No coincide")
             self.puntajeJugador = self.puntajeJugador-3
-            puntajeMostrar = "Puntaje actual", str(self.puntajeJugador)
             mensaje = QMessageBox()
-            mensaje.setIcon(QMessageBox.Information)
-            mensaje.setText(str(puntajeMostrar))
+            mensaje.setWindowTitle("ERROR, Puntaje Actual:")
+            mensaje.setIcon(QMessageBox.Warning)
+            mensaje.setText(str(self.puntajeJugador))
             mensaje.exec_()
-
-
-
-
     # Informar valores ejecucion automatica
     def informarValoresAutomatico(self,variables):
         # informacion sobre las variables de una ejecucion
