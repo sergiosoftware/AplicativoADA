@@ -1,6 +1,6 @@
 '''librerias y archivos importados'''
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox, QGraphicsTextItem, QAction
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox, QGraphicsTextItem, QAction, QInputDialog
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import *
 from PyQt5 import uic
@@ -11,6 +11,7 @@ import Controllers.analizadorSintacticoSemantico as Semantico
 from Controllers.notacionAnalisis import *
 from Components.graficosEjecuciones import *
 import threading
+import time
 
 
 ''' GUI principal donde se realiza toda la gestion del aplicativo'''
@@ -41,6 +42,8 @@ class GUIPrincipal(QMainWindow):
                                                                  self.mainGeneral.panel)
         # Control del desarrollo del analizador analizadorSemantico del aplicativo
         self.hiloControl = threading.Thread()
+        # Control del desarrollo del analizador del aplicativo automatico
+        self.hiloControlAutomatico = threading.Thread()
         # Control de la linea de ejecuion actual
         self.lineaActual = linA.lineaActual()
         self.setStatusBar(self.lineaActual)
@@ -52,6 +55,10 @@ class GUIPrincipal(QMainWindow):
         self.CargarFunciones()
         # Asignar una barra de herramientas con las pricipales funciones al frame general
         self.cargarAsignarHerramientas()
+        # Control de la linea n
+        self.lineaN = []
+        # Control de la ejecucion automatic
+        self.controlAutomatico = True
 
     # Identifica la linea (numero) y posicion dado un estado
     def ControlLinea(self):
@@ -154,38 +161,66 @@ class GUIPrincipal(QMainWindow):
         se toma el ambiente(nodo) actual y se ubica la raiz del arbol de ejecuciones
         se hace el recorrido desde la raiz hasta el ambiente (nodo) actual'''
     def opcionesContinuar(self):
-        print('llega a alguna cosa')
         posicion = self.mainGeneral.panel.getPosicionCursor()
-        print(self.mainGeneral.panel.getPosicionCursor())
         datos = self.posicionCursor(posicion)
         if(self.analizadorSemantico != None):
-            print('alguna cosa')
+            # Verificar que se tienen lineas para analisis semantico
             if self.analizadorSemantico.vActual != None:
-                print('alguna cosa 2')
                 self.mainGeneral.estado.clear()
                 self.informarValores(self.analizadorSemantico.vActual)
-                print('alguna cosa 3')
             nodoA = self.analizadorSemantico.aActual
             raiz = self.analizadorSemantico.arbolAmbientes.getRaiz()
             encontrarN = self.analizadorSemantico.arbolAmbientes.buscarN(nodoA, raiz)
-            print('alguna cosa 4')
             encontrarN.nActivo = True
-            print('alguna cosa 4.1')
             self.mainGeneral.canvas.arbolEntornos = self.analizadorSemantico.arbolAmbientes
-            print('alguna cosa 4.2')
             self.mainGeneral.canvas.drawA()
-            print('alguna cosa 5')
             encontrarN.nActivo = False
             self.analizadorSemantico.pasoActual = False
-            print('alguna cosa 6')
 
     # Obtener posicion del cursor dada una linea
     def posicionCursor(self,linea):
         return self.mainGeneral.panel.text(linea[0])
 
-    # Pausar la ejecucion del programa
+    # Ejecucion automatica del analisis del codigo
     def opcionesAutomatico(self):
-        print ("Sin desarrollar")
+        #buttonReply = QMessageBox.question(self, 'PyQt5 message', "Automático con visualizacián?",
+        #                                   QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+        #if buttonReply == QMessageBox.Yes:
+        #    print('Yes clicked.')
+        #else:
+         #   print('No clicked.')
+          #  self.opcionesAutomaticoLlamados()
+        #self.show()
+        self.opcionesAutomaticoLlamados()
+        print ("Automatico")
+
+    def opcionesAutomaticoLlamados(self):
+        while True:
+            posicion = self.mainGeneral.panel.getPosicionCursor()
+            self.lineaN.append(posicion[0])
+            copia = self.lineaN.copy()
+            copia.reverse()
+            if (len(self.lineaN) > 1):
+                if (copia[0] == copia[1]):
+                    self.controlAutomatico = False
+                    break
+            datos = self.posicionCursor(posicion)
+            if (self.analizadorSemantico != None):
+                if self.analizadorSemantico.vActual != None:
+                    self.mainGeneral.estado.clear()
+                    self.informarValores(self.analizadorSemantico.vActual)
+                nodoA = self.analizadorSemantico.aActual
+                raiz = self.analizadorSemantico.arbolAmbientes.getRaiz()
+                encontrarN = self.analizadorSemantico.arbolAmbientes.buscarN(nodoA, raiz)
+                encontrarN.nActivo = True
+                self.mainGeneral.canvas.arbolEntornos = self.analizadorSemantico.arbolAmbientes
+                self.mainGeneral.canvas.drawA()
+                encontrarN.nActivo = False
+                self.analizadorSemantico.pasoActual = False
+                time.sleep(2)
+                self.opcionesAutomaticoLlamados()
+        self.opcionesContinuar()
+
 
     # Limpiar el canvas del terminal
     def opcionesLimpiarTerminal(self):
@@ -274,7 +309,13 @@ class GUIPrincipal(QMainWindow):
 
     # informacion sobre las variables de una ejecucion
     def informarValores(self, variables):
+        # Solicitar al usuario los resultados esperados de la ejecucion
+        valorEsperado, ok = QInputDialog.getText(self, "Valor esperado de la ejecucion", "Valor esperado:")
+        if ok and valorEsperado != '': print('Esperado: ', valorEsperado)
+        ultimo = 0
+        ultimonuevo = 0
         for i,j in variables.items():
+            ultimo = ultimo+1
             if type(j[0]) == tuple:
                 self.mainGeneral.estado.append(etiquetaAzulO + "Variable: " + cierreEtiqueta + etiquetaVerde + str(i) + cierreEtiqueta +
                                                etiquetaAzulO + "Almacenados :" + str(j[0][0]) + cierreEtiqueta + " Dimension " + str(j[0][1]))
@@ -287,6 +328,13 @@ class GUIPrincipal(QMainWindow):
                     self.mainGeneral.estado.append(etiquetaAzulO + "Costos " + str(j[1].edges()) + cierreEtiqueta)
                 else:
                     self.mainGeneral.estado.append(etiquetaAzulO + "Informacion "+ str(j[1]) + cierreEtiqueta)
+        for k,l  in variables.items():
+            print("Ultimo, ",ultimo)
+            ultimonuevo = ultimonuevo+1
+            if (ultimonuevo == ultimo):
+                print("Coincidencia",str(l[1]))
+                if (str(l[1]) == valorEsperado):
+                    print("ultimo nuevo,",ultimonuevo)
 
     # Tokens del analisis del codigo
     def tokensCodigo(self, cadena):

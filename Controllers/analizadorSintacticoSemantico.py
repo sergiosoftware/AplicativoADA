@@ -728,9 +728,9 @@ class sintacticoSemantico:
                             if temp_var[0] == tipo_variable:
                                 if temp_var[0] not in self.tdLenguaje.values():  # si es una estructura de datos
                                     print(
-                                        "!!!!!!!!Advertencia, los tipos de estrucutras de datos se pasan por referencia si o si")
+                                        "Los tipos de estrucutras de datos se deben pasar por referencia")
                                     self.terminal.append(
-                                        etiquetaAmarilla + "!!!!!!!!Advertencia, los tipos de estrucutras de datos se pasan por referencia si o si" + cierreEtiqueta)
+                                        etiquetaAmarilla + "Los tipos de estrucutras de datos se pasan por referencia" + cierreEtiqueta)
 
                                 # variablesDefinidas[i] = [tipo, valorRecibido]
                                 variables_funcion[nombre_variable] = [tipo_variable,
@@ -792,7 +792,7 @@ class sintacticoSemantico:
                                     self.terminal.append(
                                         etiquetaRoja + "Error semantico, se esperaba un parametro de tipo  " + tipo_variable + " en el parametro " + nombre_variable
                                         + " y se encontro con " + str(variable_pasada) + cierreEtiqueta)
-                                    self.limpiar_variables()
+                                    self.reiniciarVariables()
                                     exit(1)
                         except Exception as e:
                             print(
@@ -1083,7 +1083,7 @@ class sintacticoSemantico:
     def p_parametros_mdoval_id_parm(self,p):
         'parametros : MODOVALOR tipo ID COMA parametros'
         if p[2] == 'ARRAY':
-            print("Erros semantico, no se permiten arreglos como parametros de una funcion, en su lugar use una lista",
+            print("Error semantico, no se permiten arreglos como parametros de una funcion, en su lugar use una lista",
                   file=sys.stderr)
             self.terminal.append(
                 etiquetaRoja + "Error semantico, no se permiten arreglos como parametros de una funcion, en su lugar use una lista" + cierreEtiqueta)
@@ -1094,10 +1094,10 @@ class sintacticoSemantico:
     def p_parametros_mdoref_id_parm(self,p):
         'parametros : MODOREFERENCIA tipo ID COMA parametros'
         if p[2] == 'ARRAY':
-            print("Erros semantico, no se permiten arreglos como parametros de una funcion, en su lugar use una lista",
+            print("Error semantico, no se permiten arreglos como parametros de una funcion, en su lugar use una lista",
                   file=sys.stderr)
             self.terminal.append(
-                etiquetaRoja + "Erros semantico, no se permiten arreglos como parametros de una funcion, en su lugar use una lista" + cierreEtiqueta)
+                etiquetaRoja + "Error semantico, no se permiten arreglos como parametros de una funcion, en su lugar use una lista" + cierreEtiqueta)
             self.reiniciarVariables()
             exit(-1)
         p[0] = p[1] + "," + p[2] + "," + p[3] + "-" + p[5]
@@ -2435,9 +2435,9 @@ class sintacticoSemantico:
                                         if temp_var[
                                             0] not in self.tdLenguaje.values():  # si es una estructura de datos # miramos si es una estuctura de datos
                                             print(
-                                                "!!!!!!!!Advertencia, los tipos de estrucutras de datos se pasan por referencia si o si")
+                                                "Los tipos de estructuras de datos se pasan por referencia")
                                             self.terminal.append(
-                                                etiquetaAmarilla + "!!!!!!!!Advertencia, los tipos de estrucutras de datos se pasan por referencia si o si" + cierreEtiqueta)
+                                                etiquetaAmarilla + "Los tipos de estructuras de datos se pasan por referencia" + cierreEtiqueta)
                                         variables_procedimientos[nombre_variable] = [tipo_variable, temp_var[1]]  # enviamos la variable
                                     else:
                                         print(

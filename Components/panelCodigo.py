@@ -27,7 +27,7 @@ class panelCodigo(QsciScintilla):
         self.SendScintilla(QsciScintilla.SCI_SETHSCROLLBAR, 0)
         # Dimension del panel donde se edita el codigo
         self.setMinimumSize(600, 360)
-        # funcion(señal) para la linea marcada------tengo dudas de su funcionamiento
+        # funcion(señal) para la linea marcada
         self.marginClicked.connect(self.asignarBreak)
         # Icono que se mostrara en la linea marcada
         self.markerDefine(QsciScintilla.Rectangle, self.CONTROL_LINEA_MARCADA)
@@ -66,7 +66,6 @@ class panelCodigo(QsciScintilla):
     def asignarBreak(self, nmargin, nline, modifiers):
         #SI LA LINEA YA ESTA MARCADA SE BORRA DE LAS
         #LINEAS MARACADAS, SI NO, SE ADICIONA
-        print("sdfsdfsdfsdfsd")
         if self.markersAtLine(nline) != 0:
             self.markerDelete(nline, self.CONTROL_LINEA_MARCADA) # se agrega el breackpoint al editor para visualizarlo
             if self.controlLineasM.__contains__(nline):

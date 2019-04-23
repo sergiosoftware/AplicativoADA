@@ -21,22 +21,18 @@ class frameArbol(QGraphicsView):
 
     # Indicar en que momento se debe repintar el canvas principal
     def drawA(self):
-        print('llegó a dibujar')
         self.panelDibujo.clear()
         self.graficar()
 
     # Proceso para graficar el arbol, incluyendo sus ambientes(nodos) y sus aristas
     def graficar(self):
-        print('llegó a graficar')
         raiz = self.arbolEntornos.getRaiz()
-        print(self.arbolEntornos.getRaiz())
         self.y = 50
         self.graficarArbol(raiz, 10, self.y)
         self.graficarAristas(raiz)
 
     # Sobrescribir el metodo mousePressEvent de la libreria QGraphicsView
     def mousePressEvent(self, event: eventoRaton) -> None:
-        print('clic 1')
         # Capturar las coordenadas sobre las que se realizo el evento
         coordenadaX = event.pos().x()
         coordenadaY = event.pos().y()
@@ -44,33 +40,24 @@ class frameArbol(QGraphicsView):
         ubicacion = self.mapToScene(event.pos())
         # Obtener la reiz del arbol
         raiz = self.arbolEntornos.getRaiz()
-        print('clic 2')
         if (raiz!=None):
-            print('clic 3')
             # Se crea para poder operar el ambiente, tener acceso a el
             ambienteN = QRect(int(ubicacion.x()), int(ubicacion.y()), raiz.dimension, raiz.dimension)
-            print('clic 4')
             self.verificarNodo(raiz, ambienteN)
-            print('clic 5')
 
     # Verificar relacion panel-ambiente
     def verificarNodo(self, ambienteActual, ambienteBuscar):
         # Verificar si el ambienteActual buscado es el ambienteActual con el evento mouse
-        print('klik 1')
         if ambienteActual.dibujarN.intersects(ambienteBuscar):
-            # Informacion del ambienteBuscar (ambienteActual)
-            print('klik 2')
+            # Informacion del ambienteBuscar (ambienteActual)zz
             mensaje = QMessageBox()
             mensaje.setIcon(QMessageBox.Information)
             mensaje.setText("Ambiente: " + str(ambienteActual.contenido))
             mensaje.exec_()
-            print('klik 3')
             return True
         else:
             # Realizar la busqueda en todos los ambientes (nodos) restantes
-            print('klik 4')
             for i in ambienteActual.hijos:
-                print('klik 5')
                 self.verificarNodo(i, ambienteBuscar)
 
     # Graficar el arbol generado

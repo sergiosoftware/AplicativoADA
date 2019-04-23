@@ -11,7 +11,6 @@ class controlAmbientes():
         self.raiz=raiz
 
     def getRaiz(self):
-        print(self.raiz)
         return self.raiz
 
 
